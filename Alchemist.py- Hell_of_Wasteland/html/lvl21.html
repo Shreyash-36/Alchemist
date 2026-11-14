@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 21: The Hellfire Wasteland</title>
+    <meta name="description" content="Level 21 of Alchemist.py - Find all Strong Numbers to cast powerful spells in the monster-filled wasteland!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl21.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- WASTELAND BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- MONSTER HUD -->
+    <div id="monster-hud">
+        <div id="monster-label">🔥 HELLFIRE WASTELAND</div>
+        <div id="monster-info">STRONG NUMBERS: ???</div>
+        <div id="monster-status">⚔️ FIGHT!</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl21"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl21" id="dialogue-box">
+        <div class="speaker-name-lvl21">The Cat</div>
+        <div id="typewriter-text-lvl21"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🔥 STRONG NUMBER SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST THE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">⚔️</div>
+            <h1 id="success-title">MONSTERS DEFEATED!</h1>
+            <p id="success-subtitle">Your Strong Number spell obliterated the hellfire monsters! The wasteland bows before your power!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl21.js"></script>
+    <script>createHelpBox(21);</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 19: The Broken Bridge</title>
+    <meta name="description" content="Level 19 of Alchemist.py - Sort the ancient numbers to rebuild the broken bridge to the Castle of Heartwood Sapphire!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl19.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- CASTLE BACKGROUNDS (cross-fade on victory) -->
+    <div id="room-bg"></div>
+    <div id="room-bg-victory"></div>
+
+    <!-- BRIDGE HUD -->
+    <div id="bridge-hud">
+        <div id="bridge-label">🧱 BROKEN BRIDGE</div>
+        <div id="bridge-numbers"></div>
+        <div id="bridge-status">🔨 BROKEN</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl19"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl19" id="dialogue-box">
+        <div class="speaker-name-lvl19">The Cat</div>
+        <div id="typewriter-text-lvl19"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🧱 SORTING SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST SORTING SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🏰</div>
+            <h1 id="success-title">BRIDGE REBUILT!</h1>
+            <p id="success-subtitle">The stones rearranged themselves into a perfect stairway! The Castle of Heartwood Sapphire awaits!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl19.js"></script>
+    <script>createHelpBox(19);</script>
+</body>
+</html>

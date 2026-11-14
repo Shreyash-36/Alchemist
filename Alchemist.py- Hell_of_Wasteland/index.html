@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            height: 100vh;
+            overflow: hidden;
+            background-image: url('assets/level1/welcome.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #welcome-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            color: #FFD700;
+            text-shadow: 3px 3px 0px #000, 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .game-title {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            animation: title-glow 2.5s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 3px 3px 0px #000, 0 0 15px rgba(255, 215, 0, 0.4); }
+            50% { text-shadow: 3px 3px 0px #000, 0 0 30px rgba(255, 215, 0, 0.7), 0 0 60px rgba(255, 215, 0, 0.3); }
+        }
+
+        #start-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2rem;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0px #000;
+            transition: all 0.3s ease;
+            animation: btn-blink 1.5s ease-in-out infinite;
+        }
+
+        #start-btn:hover {
+            color: #fff;
+            text-shadow: 0 0 15px #FFD700, 0 0 30px rgba(255, 215, 0, 0.5);
+            transform: scale(1.1);
+        }
+
+        @keyframes btn-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        @media (max-width: 768px) {
+            .game-title { font-size: 1.8rem; }
+            #start-btn { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen">
+        <h1 class="game-title">ALCHEMIST.PY</h1>
+        <button id="start-btn">[START GAME]</button>
+    </div>
+
+    <script>
+        document.getElementById('start-btn').addEventListener('click', function () {
+            window.location.href = 'html/map.html';
+        });
+    </script>
+
+</body>
+</html>

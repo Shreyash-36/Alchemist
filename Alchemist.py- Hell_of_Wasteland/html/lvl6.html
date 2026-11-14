@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 6: The Magic Circle</title>
+    <meta name="description"
+        content="Level 6 of Alchemist.py - Calculate the area of the magic circle to activate the ancient spell and fill it with magic.">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl6.css?v=loading1">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- ROOM IMAGE (background) -->
+    <div id="room-image"></div>
+
+    <!-- MAGIC CIRCLE GLOW OVERLAY -->
+    <div id="circle-glow"></div>
+
+    <!-- RADIUS HUD (shows the current circle info) -->
+    <div id="radius-hud">
+        <div id="radius-hud-label">🔮 MAGIC CIRCLE</div>
+        <div id="radius-value">Radius: ???</div>
+        <div id="area-status">Area: NOT CALCULATED</div>
+    </div>
+
+    <!-- MAGIC FILL BAR -->
+    <div id="magic-hud">
+        <div id="magic-label">✨ MAGIC FILL</div>
+        <div id="magic-bar-track">
+            <div id="magic-bar-fill"></div>
+        </div>
+        <div id="magic-percent">0%</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl6"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl6" id="dialogue-box">
+        <div class="speaker-name-lvl6">The Cat</div>
+        <div id="typewriter-text-lvl6"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">📜 ARCANE CALCULATOR</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+
+            <!-- Current Task Display -->
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+
+            <!-- Formula Hint -->
+            <div id="formula-display">
+                <div id="formula-label">FORMULA:</div>
+                <div id="formula-text">Area = π × r²</div>
+            </div>
+
+            <!-- Code Editor Area -->
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+
+            <!-- Output Console -->
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">✨</div>
+            <h1 id="success-title">THE CIRCLE IS ACTIVATED!</h1>
+            <p id="success-subtitle">Your calculation filled the magic circle with ancient power.</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js?v=loading1"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl6.js?v=loading1"></script>
+    <script>createHelpBox(6);</script>
+</body>
+
+</html>

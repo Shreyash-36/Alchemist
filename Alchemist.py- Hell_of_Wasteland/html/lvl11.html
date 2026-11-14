@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 11: The Whispering Walls</title>
+    <meta name="description" content="Level 11 of Alchemist.py - The cat enters a forest where every tree reflects its own name backwards. Reverse the given names to open the path!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl11.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- FOREST BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- NAME HUD -->
+    <div id="name-hud">
+        <div id="name-label">🌿 NAMES TO REVERSE</div>
+        <div id="name-list"></div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl11"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl11" id="dialogue-box">
+        <div class="speaker-name-lvl11">The Cat</div>
+        <div id="typewriter-text-lvl11"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🌿 REVERSAL SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST REVERSAL SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIDEO OVERLAY (plays after correct answer) -->
+    <div id="video-overlay">
+        <video id="victory-video" playsinline>
+            <source src="../assets/Level11/create_a_video_in_which_the_ph.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🌿</div>
+            <h1 id="success-title">PATH OPENED!</h1>
+            <p id="success-subtitle">The trees whispered back in harmony. The reversed names unlocked the ancient forest path!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl11.js"></script>
+    <script>createHelpBox(11);</script>
+</body>
+</html>

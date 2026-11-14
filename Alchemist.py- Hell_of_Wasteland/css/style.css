@@ -1,0 +1,460 @@
+body {
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url('../assets/level1/welcome.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+button,
+.dialogue-box,
+.pixel-text,
+#python-input {
+    font-family: 'Press Start 2P', cursive;
+}
+
+
+#welcome-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    color: #FFD700;
+    text-shadow: 3px 3px 0px #000, 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.game-title {
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+#start-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #FFD700;
+    font-size: 2rem;
+    text-transform: uppercase;
+    text-shadow: 3px 3px 0px #000;
+    transition: all 0.3s ease;
+}
+
+#start-btn:hover {
+    color: #fff;
+    text-shadow: 0 0 15px #FFD700;
+    transform: scale(1.1);
+}
+
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#loading-message {
+    color: #FFD700;
+    font-size: 1rem;
+    text-align: center;
+    padding: 20px;
+}
+
+
+.dialogue-box {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 800px;
+    min-height: 120px;
+    background: rgba(20, 20, 20, 0.95);
+    border: 6px solid #FFD700;
+    border-radius: 8px;
+    padding: 40px 25px 25px 25px;
+    box-sizing: border-box;
+    display: none;
+    z-index: 100;
+    text-align: left;
+}
+
+.speaker-name {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    background: #FFD700;
+    color: #000;
+    padding: 8px 15px;
+    font-size: 0.8rem;
+    border: 4px solid #000;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+#typewriter-text {
+    color: #FFD700;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    text-align: left;
+    margin: 0;
+    word-break: break-word;
+}
+
+
+/* ============================================================
+   GRIMOIRE OVERLAY (Code Editor)
+   ============================================================ */
+#grimoire-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.88);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+}
+
+#grimoire-overlay.open {
+    display: flex;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#grimoire-container {
+    width: 700px;
+    max-width: 94vw;
+    max-height: 90vh;
+    background: linear-gradient(145deg, #1a1400, #2a1f0a, #1a1400);
+    border: 3px solid #FFD700;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 0 60px rgba(255, 215, 0, 0.2),
+        0 0 120px rgba(255, 215, 0, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grimoire Header */
+#grimoire-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: rgba(255, 215, 0, 0.1);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+#grimoire-title {
+    color: #FFD700;
+    font-size: 9px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+#grimoire-close {
+    background: rgba(255, 100, 100, 0.15);
+    border: 2px solid rgba(255, 100, 100, 0.4);
+    color: #ff6b6b;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#grimoire-close:hover {
+    background: rgba(255, 100, 100, 0.3);
+    box-shadow: 0 0 12px rgba(255, 100, 100, 0.3);
+}
+
+/* Spell/Riddle Task Display */
+#spell-task {
+    padding: 10px 18px;
+    background: rgba(255, 215, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+#spell-task-label {
+    color: #FFD700;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+#spell-task-text {
+    color: #e6c35a;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.8;
+}
+
+/* Code Editor Area */
+#code-editor-area {
+    display: flex;
+    min-height: 140px;
+    max-height: 200px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+#line-numbers {
+    width: 36px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 6px;
+    text-align: right;
+    color: #555;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    line-height: 1.85;
+    user-select: none;
+    border-right: 1px solid rgba(255, 215, 0, 0.15);
+    overflow: hidden;
+}
+
+#code-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: #33ff33;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    line-height: 1.85;
+    padding: 12px 14px;
+    resize: none;
+    outline: none;
+    overflow-y: auto;
+    tab-size: 4;
+}
+
+#code-input::placeholder {
+    color: #3a3a2c;
+}
+
+#code-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+#code-input::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#code-input::-webkit-scrollbar-thumb {
+    background: #FFD700;
+    border-radius: 3px;
+}
+
+/* Output Console */
+#output-console {
+    min-height: 50px;
+    max-height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 14px;
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+#output-label {
+    color: #666;
+    font-size: 6px;
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 4px;
+}
+
+#output-text {
+    color: #e2e8f0;
+    font-size: 8px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+#output-text.error {
+    color: #ff6b6b;
+}
+
+#output-text.success {
+    color: #4ade80;
+}
+
+/* Grimoire Action Buttons */
+#grimoire-actions {
+    display: flex;
+    gap: 10px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#btn-cast-spell {
+    flex: 1;
+    background: linear-gradient(135deg, #b8860b, #FFD700);
+    border: 2px solid #FFD700;
+    color: #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 4px rgba(255, 215, 0, 0.3);
+    font-weight: bold;
+}
+
+#btn-cast-spell:hover {
+    background: linear-gradient(135deg, #996d09, #b8860b);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+#btn-cast-spell:active {
+    transform: translateY(0);
+}
+
+#btn-clear {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #444;
+    color: #888;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-clear:hover {
+    border-color: #666;
+    color: #aaa;
+}
+
+
+/* ============================================================
+   CAT BLINK ANIMATION
+   ============================================================ */
+@keyframes lint-blink {
+    0%, 80% { background-position: 0px; }
+    81%, 90% { background-position: -150px; }
+    91%, 100% { background-position: -300px; }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Lock hitbox - clickable area over the door lock */
+.hitbox-style {
+    position: fixed;
+    top: 45.89%;
+    left: 73.87%;
+    transform: translateX(-50%);
+    width: 103px;
+    height: 115px;
+    cursor: pointer;
+    z-index: 200;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    /* Uncomment below to debug hitbox position: */
+    /* background: rgba(255, 0, 0, 0.3); */
+}
+
+
+/* Loading spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top: 4px solid #FFD700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-top: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    #grimoire-container {
+        max-height: 85vh;
+    }
+
+    #code-editor-area {
+        min-height: 100px;
+    }
+
+    #grimoire-title {
+        font-size: 7px;
+    }
+
+    #code-input {
+        font-size: 7px;
+    }
+
+    .dialogue-box {
+        width: 92%;
+        padding: 30px 15px 15px 15px;
+    }
+
+    #typewriter-text {
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 480px) {
+    #grimoire-title {
+        font-size: 6px;
+    }
+
+    #code-input {
+        font-size: 6px;
+    }
+
+    #spell-task-text {
+        font-size: 6px;
+    }
+}

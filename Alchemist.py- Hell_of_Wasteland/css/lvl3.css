@@ -1,0 +1,856 @@
+/* ============================================================
+   ALCHEMIST.PY — LEVEL 3: THE LEVER GATE
+   ============================================================ */
+
+/* --- RESET & BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #0a0a0a;
+    position: relative;
+}
+
+/* --- GATE IMAGE (full-screen background) --- */
+#gate-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('C:/Users/shrey/Desktop/Coders Space/ASEP GAME/assets/Level3/gate_levers_up.jpg');
+    background-size: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* --- PARTICLE CANVAS --- */
+#spell-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* --- Ambient dark vignette overlay for atmosphere --- */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(0, 0, 0, 0.4) 60%,
+            rgba(0, 0, 0, 0.7) 100%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* ============================================================
+   LEVER HUD (Top-Right)
+   ============================================================ */
+#lever-hud {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.88);
+    border: 2px solid #c0813d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 0 20px rgba(192, 129, 61, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+#lever-hud.visible {
+    opacity: 1;
+}
+
+#lever-hud-label {
+    color: #c0813d;
+    font-size: 7px;
+    text-shadow: 0 0 8px rgba(192, 129, 61, 0.5);
+    text-align: center;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+#lever-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lever-slot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.5s ease;
+    border: 1px solid transparent;
+}
+
+.lever-slot-icon {
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+    transition: all 0.5s ease;
+}
+
+.lever-slot-text {
+    color: #666;
+    font-size: 6px;
+    transition: color 0.5s ease;
+}
+
+.lever-slot.even-flipped {
+    background: rgba(74, 222, 128, 0.12);
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+.lever-slot.even-flipped .lever-slot-text {
+    color: #4ade80;
+}
+
+.lever-slot.odd-locked {
+    background: rgba(255, 80, 80, 0.08);
+    border-color: rgba(255, 80, 80, 0.2);
+}
+
+.lever-slot.odd-locked .lever-slot-text {
+    color: #ff6b6b;
+}
+
+.lever-slot.pending {
+    background: rgba(100, 100, 100, 0.08);
+}
+
+.lever-slot.pending .lever-slot-icon {
+    filter: grayscale(1) brightness(0.5);
+}
+
+.lever-slot.active {
+    background: rgba(192, 129, 61, 0.15);
+    border-color: rgba(192, 129, 61, 0.4);
+}
+
+.lever-slot.active .lever-slot-text {
+    color: #d4a574;
+}
+
+/* ============================================================
+   PROGRESS BAR (Top Center)
+   ============================================================ */
+#progress-hud {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(10, 10, 10, 0.88);
+    border: 2px solid #c0813d;
+    border-radius: 8px;
+    padding: 10px 24px;
+    box-shadow: 0 0 20px rgba(192, 129, 61, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+#progress-hud.visible {
+    opacity: 1;
+}
+
+#progress-label {
+    color: #c0813d;
+    font-size: 7px;
+    text-shadow: 0 0 8px rgba(192, 129, 61, 0.5);
+    white-space: nowrap;
+}
+
+#progress-bar-track {
+    width: 200px;
+    height: 14px;
+    background: #1a1a1a;
+    border: 2px solid #444;
+    border-radius: 7px;
+    overflow: hidden;
+    position: relative;
+}
+
+#progress-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #8B4513, #c0813d, #DAA520, #FFD700);
+    border-radius: 5px;
+    transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 10px rgba(192, 129, 61, 0.6);
+    position: relative;
+}
+
+#progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+#progress-percent {
+    color: #c0813d;
+    font-size: 10px;
+    min-width: 40px;
+    text-align: right;
+    text-shadow: 0 0 6px rgba(192, 129, 61, 0.4);
+}
+
+/* ============================================================
+   THE CAT (Level 3 version)
+   ============================================================ */
+#the-cat-lvl3 {
+    position: fixed;
+    bottom: 150px;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background-image: url('../assets/cat-sitting-animation.png');
+    background-repeat: no-repeat;
+    background-size: 450px 150px;
+    animation: cat-blink 3.5s steps(1) infinite;
+    z-index: 50;
+    display: none;
+    filter: brightness(0.7);
+    transition: filter 1.5s ease;
+    cursor: pointer;
+}
+
+#the-cat-lvl3:hover {
+    transform: scale(1.05);
+}
+
+@keyframes cat-blink {
+
+    0%,
+    80% {
+        background-position: 0px;
+    }
+
+    81%,
+    90% {
+        background-position: -150px;
+    }
+
+    91%,
+    100% {
+        background-position: -300px;
+    }
+}
+
+/* ============================================================
+   DIALOGUE BOX
+   ============================================================ */
+.dialogue-box-lvl3 {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    max-width: 850px;
+    min-height: 100px;
+    background: rgba(10, 8, 20, 0.95);
+    border: 4px solid #c0813d;
+    border-radius: 8px;
+    padding: 35px 25px 20px 25px;
+    box-sizing: border-box;
+    display: none;
+    z-index: 100;
+    text-align: left;
+    box-shadow: 0 0 30px rgba(192, 129, 61, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.speaker-name-lvl3 {
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    background: linear-gradient(135deg, #8B4513, #c0813d);
+    color: #fff;
+    padding: 6px 14px;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    border: 3px solid #1a1a2e;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(192, 129, 61, 0.3);
+}
+
+#typewriter-text-lvl3 {
+    color: #d4a574;
+    font-size: 9px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 2;
+    text-align: left;
+    word-break: break-word;
+    text-shadow: 0 0 4px rgba(192, 129, 61, 0.2);
+}
+
+/* Click to continue prompt */
+.click-prompt {
+    color: #c0813d;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    margin-top: 10px;
+    animation: blink-prompt 1.2s ease infinite;
+}
+
+@keyframes blink-prompt {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ============================================================
+   GRIMOIRE OVERLAY (Code Editor)
+   ============================================================ */
+#grimoire-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.88);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+}
+
+#grimoire-overlay.open {
+    display: flex;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#grimoire-container {
+    width: 700px;
+    max-width: 94vw;
+    max-height: 90vh;
+    background: linear-gradient(145deg, #1a1008, #2a1a0d, #1a1008);
+    border: 3px solid #c0813d;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 0 60px rgba(192, 129, 61, 0.2),
+        0 0 120px rgba(192, 129, 61, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grimoire Header */
+#grimoire-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: rgba(192, 129, 61, 0.12);
+    border-bottom: 2px solid rgba(192, 129, 61, 0.3);
+}
+
+#grimoire-title {
+    color: #d4a574;
+    font-size: 9px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 0 0 10px rgba(192, 129, 61, 0.5);
+}
+
+#grimoire-close {
+    background: rgba(255, 100, 100, 0.15);
+    border: 2px solid rgba(255, 100, 100, 0.4);
+    color: #ff6b6b;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#grimoire-close:hover {
+    background: rgba(255, 100, 100, 0.3);
+    box-shadow: 0 0 12px rgba(255, 100, 100, 0.3);
+}
+
+/* Spell Task Display */
+#spell-task {
+    padding: 10px 18px;
+    background: rgba(192, 129, 61, 0.08);
+    border-bottom: 1px solid rgba(192, 129, 61, 0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+#spell-task-label {
+    color: #c0813d;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+#spell-task-text {
+    color: #d4a574;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.8;
+}
+
+/* Lever Numbers Display */
+#lever-display {
+    padding: 10px 18px;
+    background: rgba(192, 129, 61, 0.05);
+    border-bottom: 1px solid rgba(192, 129, 61, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#lever-display-label {
+    color: #888;
+    font-size: 6px;
+    font-family: 'Press Start 2P', cursive;
+    white-space: nowrap;
+}
+
+#lever-numbers-row {
+    display: flex;
+    gap: 8px;
+}
+
+.lever-num-badge {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #555;
+    border-radius: 6px;
+    color: #aaa;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    transition: all 0.5s ease;
+}
+
+.lever-num-badge.even-done {
+    border-color: #4ade80;
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.3);
+}
+
+.lever-num-badge.odd-done {
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    background: rgba(255, 80, 80, 0.08);
+}
+
+/* Code Editor Area */
+#code-editor-area {
+    display: flex;
+    min-height: 140px;
+    max-height: 200px;
+    border-bottom: 1px solid rgba(192, 129, 61, 0.15);
+}
+
+#line-numbers {
+    width: 36px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 6px;
+    text-align: right;
+    color: #555;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    line-height: 1.85;
+    user-select: none;
+    border-right: 1px solid rgba(192, 129, 61, 0.15);
+    overflow: hidden;
+}
+
+#code-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: #4ade80;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    line-height: 1.85;
+    padding: 12px 14px;
+    resize: none;
+    outline: none;
+    overflow-y: auto;
+    tab-size: 4;
+}
+
+#code-input::placeholder {
+    color: #3a3a2c;
+}
+
+#code-input::-webkit-scrollbar {
+    width: 6px;
+}
+
+#code-input::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#code-input::-webkit-scrollbar-thumb {
+    background: #c0813d;
+    border-radius: 3px;
+}
+
+/* Output Console */
+#output-console {
+    min-height: 50px;
+    max-height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 14px;
+    overflow-y: auto;
+    border-bottom: 1px solid rgba(192, 129, 61, 0.15);
+}
+
+#output-label {
+    color: #666;
+    font-size: 6px;
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 4px;
+}
+
+#output-text {
+    color: #e2e8f0;
+    font-size: 8px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+#output-text.error {
+    color: #ff6b6b;
+}
+
+#output-text.success {
+    color: #4ade80;
+}
+
+/* Grimoire Action Buttons */
+#grimoire-actions {
+    display: flex;
+    gap: 10px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#btn-cast-spell {
+    flex: 1;
+    background: linear-gradient(135deg, #8B4513, #c0813d);
+    border: 2px solid #DAA520;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 8px rgba(192, 129, 61, 0.5);
+}
+
+#btn-cast-spell:hover {
+    background: linear-gradient(135deg, #6d3410, #8B4513);
+    box-shadow: 0 0 25px rgba(192, 129, 61, 0.4);
+    transform: translateY(-2px);
+}
+
+#btn-cast-spell:active {
+    transform: translateY(0);
+}
+
+#btn-clear {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #444;
+    color: #888;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#btn-clear:hover {
+    border-color: #666;
+    color: #aaa;
+}
+
+/* ============================================================
+   SUCCESS SCREEN
+   ============================================================ */
+#success-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+    transition: background 1s ease;
+}
+
+#success-screen.show {
+    display: flex;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#success-content {
+    text-align: center;
+    animation: successPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successPop {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#success-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+#success-title {
+    color: #FFD700;
+    font-size: 18px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+#success-subtitle {
+    color: #d4a574;
+    font-size: 8px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 2;
+    margin-bottom: 24px;
+    max-width: 500px;
+}
+
+#success-stats {
+    color: #4ade80;
+    font-size: 7px;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 2.2;
+    margin-bottom: 30px;
+}
+
+#btn-continue {
+    background: linear-gradient(135deg, #8B4513, #c0813d);
+    border: 3px solid #DAA520;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+}
+
+#btn-continue:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 35px rgba(218, 165, 32, 0.5);
+}
+
+/* ============================================================
+   TORCH FLICKER GLOW EFFECT
+   ============================================================ */
+.torch-flicker {
+    animation: torchFlicker 3s ease-in-out infinite alternate;
+}
+
+@keyframes torchFlicker {
+    0% {
+        filter: brightness(1);
+    }
+
+    25% {
+        filter: brightness(1.04);
+    }
+
+    50% {
+        filter: brightness(0.96);
+    }
+
+    75% {
+        filter: brightness(1.05);
+    }
+
+    100% {
+        filter: brightness(1);
+    }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    #progress-hud {
+        padding: 8px 14px;
+        gap: 8px;
+    }
+
+    #progress-bar-track {
+        width: 120px;
+    }
+
+    #progress-label {
+        font-size: 6px;
+    }
+
+    #lever-hud {
+        top: 65px;
+        right: 10px;
+        padding: 8px 10px;
+    }
+
+    #lever-hud-label {
+        font-size: 6px;
+    }
+
+    .lever-slot-text {
+        font-size: 5px;
+    }
+
+    #grimoire-container {
+        max-height: 85vh;
+    }
+
+    #code-editor-area {
+        min-height: 100px;
+    }
+
+    #success-title {
+        font-size: 12px;
+    }
+
+    .dialogue-box-lvl3 {
+        width: 92%;
+        padding: 30px 15px 15px 15px;
+    }
+
+    #typewriter-text-lvl3 {
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 480px) {
+    #progress-bar-track {
+        width: 80px;
+    }
+
+    #lever-hud {
+        display: none;
+    }
+
+    #grimoire-title {
+        font-size: 7px;
+    }
+
+    #code-input {
+        font-size: 7px;
+    }
+
+    .lever-num-badge {
+        width: 26px;
+        height: 26px;
+        font-size: 8px;
+    }
+}

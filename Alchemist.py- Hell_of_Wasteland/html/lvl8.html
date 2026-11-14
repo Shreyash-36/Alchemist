@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 8: The Hungry Cat</title>
+    <meta name="description" content="Level 8 of Alchemist.py - Help the hungry cat find the container with the most milk by calculating the maximum of three numbers.">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl8.css?v=loading1">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- ROOM BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- MILK HUD -->
+    <div id="milk-hud">
+        <div id="milk-label">🥛 MILK CONTAINERS</div>
+        <div id="milk-amounts">
+            <span class="milk-vessel" id="vessel-a">🫙 A: <span id="val-a">?</span></span>
+            <span class="milk-vessel" id="vessel-b">🫙 B: <span id="val-b">?</span></span>
+            <span class="milk-vessel" id="vessel-c">🫙 C: <span id="val-c">?</span></span>
+        </div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl8"></div>
+
+    <!-- THREE OPAQUE VESSELS -->
+    <div id="vessels-container">
+        <div class="vessel" id="vessel-1">
+            <div class="vessel-body"></div>
+            <div class="vessel-label" id="label-1">?</div>
+            <div class="vessel-glow"></div>
+        </div>
+        <div class="vessel" id="vessel-2">
+            <div class="vessel-body"></div>
+            <div class="vessel-label" id="label-2">?</div>
+            <div class="vessel-glow"></div>
+        </div>
+        <div class="vessel" id="vessel-3">
+            <div class="vessel-body"></div>
+            <div class="vessel-label" id="label-3">?</div>
+            <div class="vessel-glow"></div>
+        </div>
+    </div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl8" id="dialogue-box">
+        <div class="speaker-name-lvl8">The Cat</div>
+        <div id="typewriter-text-lvl8"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">📜 MILK FINDER SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ FIND MAX MILK</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🥛</div>
+            <h1 id="success-title">CAT IS FED!</h1>
+            <p id="success-subtitle">You found the container with the most milk. The cat purrs happily!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js?v=loading1"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl8.js?v=loading1"></script>
+    <script>createHelpBox(8);</script>
+</body>
+</html>

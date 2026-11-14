@@ -1,0 +1,216 @@
+/* ============================================================
+   HELP BOX — Shared Styles
+   ============================================================ */
+
+/* --- HELP BUTTON (top-left corner) --- */
+#help-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 9000;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 2px solid #FFD700;
+    background: rgba(20, 16, 0, 0.85);
+    color: #FFD700;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+    animation: help-pulse 3s ease-in-out infinite;
+}
+
+#help-btn:hover {
+    background: rgba(255, 215, 0, 0.15);
+    box-shadow: 0 0 24px rgba(255, 215, 0, 0.4);
+    transform: scale(1.1);
+}
+
+@keyframes help-pulse {
+    0%, 100% { box-shadow: 0 0 12px rgba(255, 215, 0, 0.15); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.35); }
+}
+
+/* --- OVERLAY BACKDROP --- */
+#help-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(4px);
+    z-index: 9500;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#help-overlay.open {
+    display: flex;
+    animation: help-fadeIn 0.3s ease;
+}
+
+@keyframes help-fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* --- HELP PANEL --- */
+#help-panel {
+    width: 520px;
+    max-width: 92vw;
+    max-height: 80vh;
+    background: linear-gradient(145deg, #1a1400, #2a1f0a, #1a1400);
+    border: 2px solid #FFD700;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 0 50px rgba(255, 215, 0, 0.15),
+        inset 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+/* --- HEADER --- */
+#help-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(255, 215, 0, 0.1);
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+#help-title {
+    color: #FFD700;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 9px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+#help-close {
+    background: rgba(255, 100, 100, 0.15);
+    border: 2px solid rgba(255, 100, 100, 0.4);
+    color: #ff6b6b;
+    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+}
+
+#help-close:hover {
+    background: rgba(255, 100, 100, 0.3);
+    box-shadow: 0 0 10px rgba(255, 100, 100, 0.3);
+}
+
+/* --- SCROLLABLE CONTENT --- */
+#help-body {
+    padding: 16px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#help-body::-webkit-scrollbar { width: 6px; }
+#help-body::-webkit-scrollbar-track { background: transparent; }
+#help-body::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 3px; }
+
+/* --- SECTION STYLES --- */
+.help-section {
+    margin-bottom: 16px;
+}
+
+.help-section:last-child {
+    margin-bottom: 0;
+}
+
+.help-section-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    color: #FFD700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.help-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: #e6c35a;
+    line-height: 2;
+}
+
+/* --- CODE BLOCKS --- */
+.help-code {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: #33ff33;
+    line-height: 2;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* --- DIVIDER --- */
+.help-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    margin: 14px 0;
+}
+
+/* --- QUICK REF TOGGLE --- */
+.help-toggle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: #FFD700;
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.help-toggle:hover {
+    background: rgba(255, 215, 0, 0.15);
+}
+
+.help-toggle-content {
+    display: none;
+    margin-top: 10px;
+}
+
+.help-toggle-content.open {
+    display: block;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 520px) {
+    #help-panel {
+        max-height: 85vh;
+    }
+    #help-title { font-size: 7px; }
+    .help-section-title { font-size: 7px; }
+    .help-text { font-size: 6px; }
+    .help-code { font-size: 6px; }
+}

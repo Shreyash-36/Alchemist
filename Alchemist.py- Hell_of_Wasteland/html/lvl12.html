@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 12: The Enchanted Library</title>
+    <meta name="description" content="Level 12 of Alchemist.py - The cat reaches a wizard shop and must convert the cave map from lowercase to uppercase to read it!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl12.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- SHOP BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- MAP HUD -->
+    <div id="map-hud">
+        <div id="map-label">🪙 CAVE MAP TEXT</div>
+        <div id="map-text"></div>
+        <div id="map-arrow">⬇</div>
+        <div id="map-expected"></div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl12"></div>
+
+    <!-- DIALOGUE BOX (Cat) -->
+    <div class="dialogue-box-lvl12" id="dialogue-box">
+        <div class="speaker-name-lvl12" id="speaker-label">The Cat</div>
+        <div id="typewriter-text-lvl12"></div>
+    </div>
+
+    <!-- WIZARD SPEECH CLOUD -->
+    <div id="wizard-bubble" class="wizard-bubble">
+        <div id="wizard-bubble-text"></div>
+        <div class="wizard-bubble-tail"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🪙 UPPERCASE SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST UPPERCASE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🪙</div>
+            <h1 id="success-title">MAP DECODED!</h1>
+            <p id="success-subtitle">The cat can now read the cave map! Time to find those gold coins and buy some delicious food!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl12.js"></script>
+    <script>createHelpBox(12);</script>
+</body>
+</html>

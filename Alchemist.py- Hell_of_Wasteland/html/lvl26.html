@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 26: The Volcano Radiation Map</title>
+    <meta name="description" content="Level 26 of Alchemist.py - Find the least radiated zone among three Hell Volcanoes using nested logic!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl26.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- RADIATION HUD -->
+    <div id="rad-hud">
+        <div id="rad-label">☢️ RADIATION MAP</div>
+        <div id="rad-info">VOLCANOES: 3 | SAFE ZONE: ???</div>
+        <div id="rad-status">⚠️ SCANNING...</div>
+    </div>
+
+    <!-- THE CAT SPRITE (right side) -->
+    <div id="the-cat-lvl26"></div>
+
+    <!-- THE UNICORN SPRITE (left side) -->
+    <div id="the-unicorn-lvl26"></div>
+
+    <!-- DIALOGUE BOX (Cat — bottom center) -->
+    <div class="dialogue-box-cat" id="dialogue-box-cat">
+        <div class="speaker-name-cat">The Cat</div>
+        <div id="typewriter-text-cat"></div>
+    </div>
+
+    <!-- DIALOGUE BOX (Unicorn — bottom center, lavender theme) -->
+    <div class="dialogue-box-unicorn" id="dialogue-box-unicorn">
+        <div class="speaker-name-unicorn">Lumina</div>
+        <div id="typewriter-text-unicorn"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">☢️ RADIATION ZONE SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST THE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">☢️</div>
+            <h1 id="success-title">SAFE ZONE FOUND!</h1>
+            <p id="success-subtitle">You've mapped the radiation zones! The path to Lucifer's castle through the least radiated corridor is clear!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl26.js"></script>
+    <script>createHelpBox(26);</script>
+</body>
+</html>

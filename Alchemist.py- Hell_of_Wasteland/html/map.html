@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 30%, #2a1f0a 0%, #110e04 50%, #0a0800 100%);
+            color: #FFD700;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .map-header {
+            text-align: center;
+            padding: 36px 20px 10px;
+        }
+        .map-title {
+            font-size: 20px;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 3px 3px 0 #000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .map-subtitle {
+            font-size: 8px;
+            color: #b8960a;
+            letter-spacing: 1px;
+        }
+
+        /* ── LEVEL GRID ── */
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            max-width: 900px;
+            margin: 36px auto;
+            padding: 0 24px;
+        }
+
+        /* ── LEVEL CARD ── */
+        .level-card {
+            background: rgba(30, 26, 14, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: default;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Locked card */
+        .level-card.locked {
+            opacity: 0.45;
+        }
+        .level-card.locked .lock-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+            filter: grayscale(0.5);
+        }
+        .level-card.locked .card-title,
+        .level-card.locked .card-subtitle,
+        .level-card.locked .card-concept {
+            color: #555;
+        }
+
+        /* Unlocked (current) card */
+        .level-card.unlocked {
+            border-color: #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.05);
+            cursor: pointer;
+            animation: card-glow 2.5s ease-in-out infinite;
+        }
+        .level-card.unlocked:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.45), inset 0 0 20px rgba(255, 215, 0, 0.1);
+            border-color: #fff3b0;
+        }
+
+        @keyframes card-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.05); }
+            50% { box-shadow: 0 0 28px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.08); }
+        }
+
+        /* Completed card */
+        .level-card.completed {
+            border-color: #4ade80;
+            opacity: 0.85;
+            cursor: pointer;
+        }
+        .level-card.completed:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+        }
+        .level-card.completed .card-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 12px;
+        }
+
+        /* Card elements */
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 2px;
+        }
+        .card-title {
+            font-size: 9px;
+            color: #FFD700;
+            margin-bottom: 2px;
+        }
+        .card-subtitle {
+            font-size: 6px;
+            color: #b8960a;
+            line-height: 1.6;
+        }
+        .card-concept {
+            font-size: 6px;
+            color: #4ade80;
+            margin-top: 2px;
+        }
+
+        /* ── FOOTER BAR ── */
+        .map-footer {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .progress-text {
+            font-size: 9px;
+            color: #b8960a;
+        }
+        .progress-text span {
+            color: #FFD700;
+        }
+        .reset-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #ff6b6b;
+            background: rgba(255, 100, 100, 0.1);
+            border: 2px solid rgba(255, 100, 100, 0.35);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .reset-btn:hover {
+            background: rgba(255, 100, 100, 0.25);
+            border-color: #ff6b6b;
+        }
+
+        /* ── CHAPTER 2 BUTTON ── */
+        .chapter2-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            animation: ch2-glow 2s ease-in-out infinite;
+        }
+        .chapter2-btn:hover {
+            background: rgba(255, 215, 0, 0.25);
+            border-color: #FFD700;
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+            transform: translateY(-2px);
+        }
+        .chapter2-btn.visible {
+            display: inline-block;
+        }
+        @keyframes ch2-glow {
+            0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.15); }
+            50% { box-shadow: 0 0 16px rgba(255, 215, 0, 0.35); }
+        }
+
+        /* ── VIDEO OVERLAY ── */
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: #000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .video-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .video-overlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .video-skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #aaa;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100000;
+        }
+        .video-skip-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        .video-continue-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.12);
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            padding: 20px 36px;
+            cursor: pointer;
+            z-index: 100000;
+            display: none;
+            opacity: 0;
+            transition: all 0.4s ease;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+            animation: continue-pulse 2s ease-in-out infinite;
+        }
+        .video-continue-btn.visible {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .video-continue-btn:hover {
+            background: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+        @keyframes continue-pulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.45); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .level-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            .map-title { font-size: 14px; }
+            .level-card { min-height: 110px; padding: 14px 8px; }
+            .card-icon, .lock-icon { font-size: 22px; }
+            .card-title { font-size: 7px; }
+        }
+        @media (max-width: 420px) {
+            .level-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-header">
+        <div class="map-title">🏚️ ALCHEMIST'S MAP 🏚️</div>
+        <div class="map-subtitle">THE ALCHEMIST'S MANSION</div>
+    </div>
+
+    <div class="level-grid" id="level-grid"></div>
+
+    <div class="map-footer">
+        <div class="progress-text">LEVELS COMPLETED: <span id="completed-count">0</span> / 10</div>
+        <button class="reset-btn" id="reset-btn">🔒 RESET</button>
+        <button class="chapter2-btn" id="chapter2-btn">🗺️ CHAPTER 2</button>
+    </div>
+
+    <!-- CHAPTER 2 INTRO VIDEO OVERLAY -->
+    <div class="video-overlay" id="ch2-video-overlay">
+        <video id="ch2-intro-video" playsinline>
+            <source src="../assets/Level10+/chapter2-intro.mp4" type="video/mp4">
+        </video>
+        <button class="video-skip-btn" id="ch2-skip-btn">SKIP ▶▶</button>
+        <button class="video-continue-btn" id="ch2-continue-btn">ENTER CHAPTER 2 →</button>
+    </div>
+
+<script>
+    var LEVELS = [
+        { num: 1,  title: "Level 1",  name: "The Riddle Gate",       icon: "🚪", concept: "print() statement" },
+        { num: 2,  title: "Level 2",  name: "The Broken Floor",      icon: "🪵", concept: "Addition (+)" },
+        { num: 3,  title: "Level 3",  name: "The Lever Gate",        icon: "⚙️", concept: "if/else & modulo %" },
+        { num: 4,  title: "Level 4",  name: "The Dark Hall",         icon: "🔮", concept: "Exponentiation **" },
+        { num: 5,  title: "Level 5",  name: "The Staircase",         icon: "🪜", concept: "if/elif/else" },
+        { num: 6,  title: "Level 6",  name: "The Magic Circle",      icon: "⭕", concept: "Math & Variables" },
+        { num: 7,  title: "Level 7",  name: "The Reversed Room",     icon: "🔄", concept: "for loop & range()" },
+        { num: 8,  title: "Level 8",  name: "The Hungry Cat",        icon: "🐱", concept: "max() function" },
+        { num: 9,  title: "Level 9",  name: "The Fibonacci Grid",    icon: "🔢", concept: "Loops & Sequences" },
+        { num: 10, title: "Level 10", name: "The Time Doors",        icon: "⏳", concept: "String & Logic" }
+    ];
+
+    function getProgress() {
+        try {
+            var saved = localStorage.getItem("alchemist_progress");
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return { completed: [] };
+    }
+
+    function saveProgress(progress) {
+        localStorage.setItem("alchemist_progress", JSON.stringify(progress));
+    }
+
+    function isCompleted(levelNum) {
+        return getProgress().completed.indexOf(levelNum) !== -1;
+    }
+
+    function isUnlocked(levelNum) {
+        if (levelNum === 1) return true;
+        return isCompleted(levelNum - 1);
+    }
+
+    function renderGrid() {
+        var grid = document.getElementById("level-grid");
+        var progress = getProgress();
+        var completedCount = progress.completed.length;
+
+        grid.innerHTML = "";
+
+        for (var i = 0; i < LEVELS.length; i++) {
+            var lvl = LEVELS[i];
+            var completed = isCompleted(lvl.num);
+            var unlocked = isUnlocked(lvl.num);
+
+            var card = document.createElement("div");
+            card.className = "level-card";
+
+            if (completed) {
+                card.classList.add("completed");
+                card.innerHTML =
+                    '<span class="card-check">✅</span>' +
+                    '<span class="card-icon">' + lvl.icon + '</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+                card.dataset.level = lvl.num;
+                card.addEventListener("click", function () {
+                    var num = this.dataset.level;
+                    window.location.href = "lvl" + num + ".html";
+                });
+            } else if (unlocked) {
+                card.classList.add("unlocked");
+                card.innerHTML =
+                    '<span class="card-icon">' + lvl.icon + '</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+                card.dataset.level = lvl.num;
+                card.addEventListener("click", function () {
+                    var num = this.dataset.level;
+                    window.location.href = "lvl" + num + ".html";
+                });
+            } else {
+                card.classList.add("locked");
+                card.innerHTML =
+                    '<span class="lock-icon">🔒</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+            }
+
+            grid.appendChild(card);
+        }
+
+        document.getElementById("completed-count").textContent = completedCount;
+
+        // Show Chapter 2 button when all 10 levels are completed
+        var ch2Btn = document.getElementById("chapter2-btn");
+        if (completedCount >= 10) {
+            ch2Btn.classList.add("visible");
+        } else {
+            ch2Btn.classList.remove("visible");
+        }
+    }
+
+    // Reset button
+    document.getElementById("reset-btn").addEventListener("click", function () {
+        if (confirm("Reset all progress? This will lock all levels except Level 1.")) {
+            localStorage.removeItem("alchemist_progress");
+            renderGrid();
+        }
+    });
+
+    // Chapter 2 button — play intro video, then open map2
+    var ch2Overlay = document.getElementById("ch2-video-overlay");
+    var ch2Video = document.getElementById("ch2-intro-video");
+    var ch2Skip = document.getElementById("ch2-skip-btn");
+    var ch2Continue = document.getElementById("ch2-continue-btn");
+
+    function showContinueButton() {
+        ch2Video.pause();
+        ch2Video.style.opacity = '0.3';
+        ch2Skip.style.display = 'none';
+        ch2Continue.classList.add("visible");
+    }
+
+    function openChapter2() {
+        ch2Overlay.classList.remove("active");
+        ch2Video.style.opacity = '1';
+        ch2Continue.classList.remove("visible");
+        ch2Skip.style.display = '';
+        window.open("map2.html", "_blank");
+    }
+
+    document.getElementById("chapter2-btn").addEventListener("click", function () {
+        ch2Overlay.classList.add("active");
+        ch2Video.currentTime = 0;
+        ch2Video.style.opacity = '1';
+        ch2Continue.classList.remove("visible");
+        ch2Skip.style.display = '';
+        ch2Video.play();
+    });
+
+    ch2Video.addEventListener("ended", showContinueButton);
+    ch2Skip.addEventListener("click", showContinueButton);
+    ch2Continue.addEventListener("click", openChapter2);
+
+    // Render on load
+    renderGrid();
+</script>
+
+</body>
+</html>

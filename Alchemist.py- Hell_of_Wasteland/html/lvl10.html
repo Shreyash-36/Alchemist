@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY - Level 10: The Time Doors</title>
+    <meta name="description"
+        content="Level 10 of Alchemist.py - Find the valid date among three time portals to help the cat escape the mansion.">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl10.css?v=loading1">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+
+<body>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- ROOM BACKGROUND (3 doors) -->
+    <div id="room-bg"></div>
+
+    <!-- TREE BACKGROUND (portal escape) - hidden initially -->
+    <div id="tree-bg"></div>
+
+    <!-- DATE HUD -->
+    <div id="date-hud">
+        <div id="date-label">TIME DOORS</div>
+        <div id="date-list">
+            <span class="date-door" id="door-a">Door A: <span id="date-a">?</span></span>
+            <span class="date-door" id="door-b">Door B: <span id="date-b">?</span></span>
+            <span class="date-door" id="door-c">Door C: <span id="date-c">?</span></span>
+        </div>
+    </div>
+
+    <!-- THREE DOORS OVERLAY -->
+    <div id="doors-container">
+        <div class="door-frame" id="door-1">
+            <div class="door-arch"></div>
+            <div class="door-date" id="door-date-1">?</div>
+            <div class="door-glow"></div>
+        </div>
+        <div class="door-frame" id="door-2">
+            <div class="door-arch"></div>
+            <div class="door-date" id="door-date-2">?</div>
+            <div class="door-glow"></div>
+        </div>
+        <div class="door-frame" id="door-3">
+            <div class="door-arch"></div>
+            <div class="door-date" id="door-date-3">?</div>
+            <div class="door-glow"></div>
+        </div>
+    </div>
+
+    <!-- PORTAL ANIMATION (under tree) -->
+    <div id="portal-wrapper">
+        <video id="portal-video" src="../assets/Level10/portal.mp4" muted loop playsinline></video>
+        <div id="portal">
+            <div class="portal-ring ring-1"></div>
+            <div class="portal-ring ring-2"></div>
+            <div class="portal-ring ring-3"></div>
+            <div class="portal-core"></div>
+            <div class="portal-sparks"></div>
+        </div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl10"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl10" id="dialogue-box">
+        <div class="speaker-name-lvl10">The Cat</div>
+        <div id="typewriter-text-lvl10"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">DATE VALIDATION SPELL</span>
+                <button id="grimoire-close" title="Close">X</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">REVEAL TIMELINE</button>
+                <button id="btn-clear">CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">*</div>
+            <h1 id="success-title">FREEDOM!</h1>
+            <p id="success-subtitle">The cat leapt through the portal and escaped the mansion. The adventure is
+                complete!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">RETURN HOME</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js?v=loading1"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl10.js?v=loading1"></script>
+    <script>createHelpBox(10);</script>
+</body>
+
+</html>

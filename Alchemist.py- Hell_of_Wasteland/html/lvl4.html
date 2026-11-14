@@ -1,0 +1,96 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 4: The Dark Hall</title>
+    <meta name="description" content="Level 4 of Alchemist.py - Cast the Light Spell by writing Python code to square numbers and illuminate the dark hall.">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl4.css?v=loading1">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- DARK OVERLAY – controls the room brightness -->
+    <div id="darkness-overlay"></div>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- LIGHT INTENSITY HUD -->
+    <div id="light-hud">
+        <div id="light-hud-label">🔥 LIGHT INTENSITY</div>
+        <div id="light-bar-track">
+            <div id="light-bar-fill"></div>
+        </div>
+        <div id="light-percent">0%</div>
+    </div>
+
+    <!-- SPELL PROGRESS TRACKER -->
+    <div id="spell-tracker">
+        <div class="spell-tracker-title">✦ SPELLS CAST ✦</div>
+        <div id="spell-slots"></div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl4"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl4" id="dialogue-box">
+        <div class="speaker-name-lvl4">The Cat</div>
+        <div id="typewriter-text-lvl4"></div>
+    </div>
+
+    <!-- SPELL GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">📜 GRIMOIRE OF LIGHT</span>
+                <button id="grimoire-close" title="Close Grimoire">✕</button>
+            </div>
+
+            <!-- Current Task Display -->
+            <div id="spell-task">
+                <span id="spell-task-label">SPELL REQUIRED:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+
+            <!-- Code Editor Area -->
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off" 
+                    placeholder="# Write your Python spell here..."></textarea>
+            </div>
+
+            <!-- Output Console -->
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">✨</div>
+            <h1 id="success-title">THE HALL IS ILLUMINATED!</h1>
+            <p id="success-subtitle">Your mastery of the squaring spell has banished the darkness.</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js?v=loading1"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl4.js?v=loading1"></script>
+    <script>createHelpBox(4);</script>
+</body>
+</html>

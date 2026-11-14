@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level Map III</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 50% 30%, #2a0a0a 0%, #180404 50%, #080000 100%);
+            color: #fb923c;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .map-header {
+            text-align: center;
+            padding: 36px 20px 10px;
+        }
+        .map-title {
+            font-size: 20px;
+            color: #fb923c;
+            text-shadow: 0 0 20px rgba(251, 146, 60, 0.5), 3px 3px 0 #000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .map-subtitle {
+            font-size: 8px;
+            color: #dc2626;
+            letter-spacing: 1px;
+        }
+
+        /* ── LEVEL GRID ── */
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            max-width: 900px;
+            margin: 36px auto;
+            padding: 0 24px;
+        }
+
+        /* ── LEVEL CARD ── */
+        .level-card {
+            background: rgba(42, 10, 10, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: default;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Locked card */
+        .level-card.locked {
+            opacity: 0.45;
+        }
+        .level-card.locked .lock-icon {
+            font-size: 28px;
+            margin-bottom: 4px;
+            filter: grayscale(0.5);
+        }
+        .level-card.locked .card-title,
+        .level-card.locked .card-subtitle,
+        .level-card.locked .card-concept {
+            color: #555;
+        }
+
+        /* Unlocked (current) card */
+        .level-card.unlocked {
+            border-color: #fb923c;
+            box-shadow: 0 0 20px rgba(251, 146, 60, 0.25), inset 0 0 15px rgba(251, 146, 60, 0.05);
+            cursor: pointer;
+            animation: card-glow 2.5s ease-in-out infinite;
+        }
+        .level-card.unlocked:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 30px rgba(251, 146, 60, 0.45), inset 0 0 20px rgba(251, 146, 60, 0.1);
+            border-color: #fed7aa;
+        }
+
+        @keyframes card-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(251, 146, 60, 0.25), inset 0 0 15px rgba(251, 146, 60, 0.05); }
+            50% { box-shadow: 0 0 28px rgba(251, 146, 60, 0.4), inset 0 0 20px rgba(251, 146, 60, 0.08); }
+        }
+
+        /* Completed card */
+        .level-card.completed {
+            border-color: #ef4444;
+            opacity: 0.85;
+            cursor: pointer;
+        }
+        .level-card.completed:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+        .level-card.completed .card-check {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 12px;
+        }
+
+        /* Card elements */
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 2px;
+        }
+        .card-title {
+            font-size: 9px;
+            color: #fb923c;
+            margin-bottom: 2px;
+        }
+        .card-subtitle {
+            font-size: 6px;
+            color: #dc2626;
+            line-height: 1.6;
+        }
+        .card-concept {
+            font-size: 6px;
+            color: #f87171;
+            margin-top: 2px;
+        }
+
+        /* ── FOOTER BAR ── */
+        .map-footer {
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .progress-text {
+            font-size: 9px;
+            color: #dc2626;
+        }
+        .progress-text span {
+            color: #fb923c;
+        }
+        .reset-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #ff6b6b;
+            background: rgba(255, 100, 100, 0.1);
+            border: 2px solid rgba(255, 100, 100, 0.35);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .reset-btn:hover {
+            background: rgba(255, 100, 100, 0.25);
+            border-color: #ff6b6b;
+        }
+
+        /* ── CHAPTER 2 BUTTON ── */
+        .chapter2-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #00ffc8;
+            background: rgba(0, 255, 200, 0.1);
+            border: 2px solid rgba(0, 255, 200, 0.4);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .chapter2-btn:hover {
+            background: rgba(0, 255, 200, 0.25);
+            border-color: #00ffc8;
+            box-shadow: 0 0 18px rgba(0, 255, 200, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* ── CHAPTER 1 BUTTON ── */
+        .chapter1-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .chapter1-btn:hover {
+            background: rgba(255, 215, 0, 0.25);
+            border-color: #FFD700;
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* ── COMING SOON BADGE ── */
+        .coming-soon-banner {
+            text-align: center;
+            padding: 20px;
+            margin: 0 auto 20px;
+            max-width: 600px;
+        }
+        .coming-soon-text {
+            font-size: 10px;
+            color: #f87171;
+            text-shadow: 0 0 14px rgba(248, 113, 113, 0.4);
+            line-height: 2.2;
+            animation: comingSoonPulse 3s ease-in-out infinite;
+        }
+        @keyframes comingSoonPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .level-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            .map-title { font-size: 14px; }
+            .level-card { min-height: 110px; padding: 14px 8px; }
+            .card-icon, .lock-icon { font-size: 22px; }
+            .card-title { font-size: 7px; }
+        }
+        @media (max-width: 420px) {
+            .level-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-header">
+        <div class="map-title">🔥 ALCHEMIST'S MAP III 🔥</div>
+        <div class="map-subtitle">THE HELL OF WASTELAND</div>
+    </div>
+
+    <div class="level-grid" id="level-grid"></div>
+
+    <div class="coming-soon-banner">
+        <div class="coming-soon-text">🔥 Chapter 3 — The quest for the remaining Crystal Compiler fragments continues... 🔥</div>
+    </div>
+
+    <div class="map-footer">
+        <div class="progress-text">LEVELS COMPLETED: <span id="completed-count">0</span> / 10</div>
+        <button class="reset-btn" id="reset-btn">🔒 RESET</button>
+        <button class="chapter2-btn" id="chapter2-btn">🗺️ CHAPTER 2</button>
+        <button class="chapter1-btn" id="chapter1-btn">🗺️ CHAPTER 1</button>
+    </div>
+
+<script>
+    var LEVELS = [
+        { num: 21, title: "Level 21", name: "The Enchanted Library",     icon: "📚", concept: "Dictionaries" },
+        { num: 22, title: "Level 22", name: "The Whispering Walls",      icon: "🔊", concept: "Tuples" },
+        { num: 23, title: "Level 23", name: "The Shadow Maze",           icon: "🌀", concept: "Sets" },
+        { num: 24, title: "Level 24", name: "The Frozen Waterfall",      icon: "❄️", concept: "List Comprehension" },
+        { num: 25, title: "Level 25", name: "The Alchemist's Lab",       icon: "⚗️", concept: "Functions" },
+        { num: 26, title: "Level 26", name: "The Mirror of Truth",       icon: "🪞", concept: "Recursion" },
+        { num: 27, title: "Level 27", name: "The Starlight Bridge",      icon: "🌟", concept: "Lambda & Map" },
+        { num: 28, title: "Level 28", name: "The Dragon's Riddle II",    icon: "🐲", concept: "File Handling" },
+        { num: 29, title: "Level 29", name: "The Crystal Chamber",       icon: "💠", concept: "Error Handling" },
+        { num: 30, title: "Level 30", name: "The Crystal Compiler",      icon: "🔮", concept: "Final Challenge" }
+    ];
+
+    // ── PROGRESS (separate key for Chapter 3) ──
+    var STORAGE_KEY = "alchemist_progress_ch3";
+
+    function getProgress() {
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return { completed: [] };
+    }
+
+    function saveProgress(progress) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function isCompleted(levelNum) {
+        return getProgress().completed.indexOf(levelNum) !== -1;
+    }
+
+    function isUnlocked(levelNum) {
+        if (levelNum === 21) return true;
+        return isCompleted(levelNum - 1);
+    }
+
+    function renderGrid() {
+        var grid = document.getElementById("level-grid");
+        var progress = getProgress();
+        var completedCount = progress.completed.length;
+
+        grid.innerHTML = "";
+
+        for (var i = 0; i < LEVELS.length; i++) {
+            var lvl = LEVELS[i];
+            var completed = isCompleted(lvl.num);
+            var unlocked = isUnlocked(lvl.num);
+
+            var card = document.createElement("div");
+            card.className = "level-card";
+
+            if (completed) {
+                card.classList.add("completed");
+                card.innerHTML =
+                    '<span class="card-check">✅</span>' +
+                    '<span class="card-icon">' + lvl.icon + '</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+                card.dataset.level = lvl.num;
+                card.addEventListener("click", function () {
+                    var num = this.dataset.level;
+                    window.location.href = "lvl" + num + ".html";
+                });
+            } else if (unlocked) {
+                card.classList.add("unlocked");
+                card.innerHTML =
+                    '<span class="card-icon">' + lvl.icon + '</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+                card.dataset.level = lvl.num;
+                card.addEventListener("click", function () {
+                    var num = this.dataset.level;
+                    window.location.href = "lvl" + num + ".html";
+                });
+            } else {
+                card.classList.add("locked");
+                card.innerHTML =
+                    '<span class="lock-icon">🔒</span>' +
+                    '<div class="card-title">' + lvl.title.toUpperCase() + '</div>' +
+                    '<div class="card-subtitle">' + lvl.name + '</div>' +
+                    '<div class="card-concept">' + lvl.concept + '</div>';
+            }
+
+            grid.appendChild(card);
+        }
+
+        document.getElementById("completed-count").textContent = completedCount;
+    }
+
+    // Reset button (only resets Chapter 3 progress)
+    document.getElementById("reset-btn").addEventListener("click", function () {
+        if (confirm("Reset Chapter 3 progress? This will lock all levels except Level 21.")) {
+            localStorage.removeItem(STORAGE_KEY);
+            renderGrid();
+        }
+    });
+
+    // Chapter 2 button
+    document.getElementById("chapter2-btn").addEventListener("click", function () {
+        window.open("map2.html", "_blank");
+    });
+
+    // Chapter 1 button
+    document.getElementById("chapter1-btn").addEventListener("click", function () {
+        window.open("map.html", "_blank");
+    });
+
+    // Render on load
+    renderGrid();
+</script>
+
+</body>
+</html>

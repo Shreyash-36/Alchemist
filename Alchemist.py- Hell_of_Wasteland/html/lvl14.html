@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 14: The Dragon's Hoard</title>
+    <meta name="description" content="Level 14 of Alchemist.py - Inside the cave, a dragon sleeps over treasure. Find the coins with prime numbers printed on them!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl14.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- CAVE BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- COIN HUD -->
+    <div id="coin-hud">
+        <div id="coin-label">🪙 COINS FOUND</div>
+        <div class="coin-trio">
+            <div class="coin-item"><span class="coin-num" id="coin-1"></span></div>
+            <div class="coin-item"><span class="coin-num" id="coin-2"></span></div>
+            <div class="coin-item"><span class="coin-num" id="coin-3"></span></div>
+        </div>
+        <div id="coin-status">CHECKING...</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl14"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl14" id="dialogue-box">
+        <div class="speaker-name-lvl14">The Cat</div>
+        <div id="typewriter-text-lvl14"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🪙 PRIME DETECTION SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST DETECTION SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🪙</div>
+            <h1 id="success-title">COIN FOUND!</h1>
+            <p id="success-subtitle">You silently identified the prime coin without waking the dragon! One step closer to buying food!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl14.js"></script>
+    <script>createHelpBox(14);</script>
+</body>
+</html>

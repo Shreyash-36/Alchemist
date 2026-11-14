@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 13: The Stone Door</title>
+    <meta name="description" content="Level 13 of Alchemist.py - The cat reaches the cave but a stone door blocks the entrance. Print a multiplication table to unlock it!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl13.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- CAVE BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- DOOR HUD -->
+    <div id="door-hud">
+        <div id="door-label">🔒 STONE DOOR LOCK</div>
+        <div id="door-number"></div>
+        <div id="door-status">LOCKED</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl13"></div>
+
+    <!-- DIALOGUE BOX (Cat) -->
+    <div class="dialogue-box-lvl13" id="dialogue-box">
+        <div class="speaker-name-lvl13" id="speaker-label">The Cat</div>
+        <div id="typewriter-text-lvl13"></div>
+    </div>
+
+    <!-- STONE DOOR INSCRIPTION (speech cloud on the stone door) -->
+    <div id="door-inscription" class="door-inscription">
+        <div id="door-inscription-text"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🔓 UNLOCKING SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST UNLOCKING SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🔓</div>
+            <h1 id="success-title">DOOR UNLOCKED!</h1>
+            <p id="success-subtitle">The ancient runes glow bright and the stone door rumbles open! The cave of gold coins awaits!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl13.js"></script>
+    <script>createHelpBox(13);</script>
+</body>
+</html>

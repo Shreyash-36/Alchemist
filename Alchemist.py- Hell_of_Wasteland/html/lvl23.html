@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 23: The Broken Navigator</title>
+    <meta name="description" content="Level 23 of Alchemist.py - Fix the nerd's broken navigator using filter, map, and lambda!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl23.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- WASTELAND BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- NAVIGATOR HUD -->
+    <div id="nav-hud">
+        <div id="nav-label">🧭 NAVIGATOR REPAIR</div>
+        <div id="nav-info">INPUT: [1,2,3,4,5,6,7,8,9,10]</div>
+        <div id="nav-status">⚙️ BROKEN</div>
+    </div>
+
+    <!-- THE CAT SPRITE (right side) -->
+    <div id="the-cat-lvl23"></div>
+
+    <!-- THE UNICORN SPRITE (left side) -->
+    <div id="the-unicorn-lvl23"></div>
+
+    <!-- DIALOGUE BOX (Cat — bottom center) -->
+    <div class="dialogue-box-cat" id="dialogue-box-cat">
+        <div class="speaker-name-cat">The Cat</div>
+        <div id="typewriter-text-cat"></div>
+    </div>
+
+    <!-- DIALOGUE BOX (Unicorn — bottom center, lavender theme) -->
+    <div class="dialogue-box-unicorn" id="dialogue-box-unicorn">
+        <div class="speaker-name-unicorn">Lumina</div>
+        <div id="typewriter-text-unicorn"></div>
+    </div>
+
+    <!-- NERD SPEECH BUBBLE (wizard-style cloud) -->
+    <div id="nerd-bubble" class="nerd-bubble">
+        <div id="nerd-bubble-text"></div>
+        <div class="nerd-bubble-tail"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🧭 NAVIGATOR REPAIR SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST THE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🧭</div>
+            <h1 id="success-title">NAVIGATOR FIXED!</h1>
+            <p id="success-subtitle">The nerd's navigator is repaired! He can finally find his way home! Your kindness shines in the wasteland!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl23.js"></script>
+    <script>createHelpBox(23);</script>
+</body>
+</html>

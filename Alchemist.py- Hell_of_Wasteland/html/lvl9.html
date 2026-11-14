@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 9: The Fibonacci Grid</title>
+    <meta name="description" content="Level 9 of Alchemist.py - Guide the cat through a grid by printing the Fibonacci sequence. One wrong step sends you back!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl9.css?v=loading1">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- ROOM BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- FIBONACCI HUD -->
+    <div id="fib-hud">
+        <div id="fib-label">🔢 FIBONACCI PATH</div>
+        <div id="fib-progress">Step: <span id="fib-step">0</span> / 10</div>
+        <div id="fib-bar-track">
+            <div id="fib-bar-fill"></div>
+        </div>
+    </div>
+
+
+
+    <!-- CAT SPRITE ON GRID -->
+    <div id="the-cat-lvl9"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl9" id="dialogue-box">
+        <div class="speaker-name-lvl9">The Cat</div>
+        <div id="typewriter-text-lvl9"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">📜 FIBONACCI SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST FIBONACCI</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🌟</div>
+            <h1 id="success-title">PATH COMPLETE!</h1>
+            <p id="success-subtitle">The cat safely crossed the Fibonacci grid. The ancient sequence guided the way!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <!-- FAIL SCREEN -->
+    <div id="fail-screen">
+        <div id="fail-content">
+            <div id="fail-icon">💀</div>
+            <h1 id="fail-title">WRONG STEP!</h1>
+            <p id="fail-subtitle">The cat stepped on the wrong tile! Falling back to Level 8...</p>
+            <button id="btn-retry">BACK TO LEVEL 8 →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js?v=loading1"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl9.js?v=loading1"></script>
+    <script>createHelpBox(9);</script>
+</body>
+</html>

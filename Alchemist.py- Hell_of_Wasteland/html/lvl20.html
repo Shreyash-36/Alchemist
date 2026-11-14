@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 20: The Statue of SIRIS</title>
+    <meta name="description" content="Level 20 of Alchemist.py - Find the real Crystal Compiler fragment by identifying the palindrome on the Statue of SIRIS!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl20.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- STATUE BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- FRAGMENT HUD -->
+    <div id="fragment-hud">
+        <div id="fragment-label">💎 FRAGMENTS OF SIRIS</div>
+        <div id="fragment-words"></div>
+        <div id="fragment-status">🔮 CHOOSE WISELY</div>
+    </div>
+
+    <!-- THE CAT SPRITE -->
+    <div id="the-cat-lvl20"></div>
+
+    <!-- DIALOGUE BOX -->
+    <div class="dialogue-box-lvl20" id="dialogue-box">
+        <div class="speaker-name-lvl20">The Cat</div>
+        <div id="typewriter-text-lvl20"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">💎 PALINDROME SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ IDENTIFY THE FRAGMENT</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">💎</div>
+            <h1 id="success-title">FRAGMENT FOUND!</h1>
+            <p id="success-subtitle">You identified the real fragment of the Crystal Compiler! The palindrome revealed the truth. 1 of 5 fragments collected!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl20.js"></script>
+    <script>createHelpBox(20);</script>
+</body>
+</html>

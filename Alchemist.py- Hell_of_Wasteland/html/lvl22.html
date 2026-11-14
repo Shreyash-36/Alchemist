@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 22: The Cliff Rescue</title>
+    <meta name="description" content="Level 22 of Alchemist.py - Save the unicorn from demons by casting a Matrix Spiral spell!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl22.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- WASTELAND BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- MATRIX HUD -->
+    <div id="matrix-hud">
+        <div id="matrix-label">🔥 MATRIX BEAM SPELL</div>
+        <div id="matrix-display">
+            <div class="matrix-row"><span>1</span><span>2</span><span>3</span></div>
+            <div class="matrix-row"><span>4</span><span>5</span><span>6</span></div>
+            <div class="matrix-row"><span>7</span><span>8</span><span>9</span></div>
+        </div>
+        <div id="matrix-status">⚔️ SPIRAL IT!</div>
+    </div>
+
+    <!-- THE CAT SPRITE (right side) -->
+    <div id="the-cat-lvl22"></div>
+
+    <!-- THE UNICORN SPRITE (left side) -->
+    <div id="the-unicorn-lvl22"></div>
+
+    <!-- DIALOGUE BOX (Cat — bottom center) -->
+    <div class="dialogue-box-cat" id="dialogue-box-cat">
+        <div class="speaker-name-cat">The Cat</div>
+        <div id="typewriter-text-cat"></div>
+    </div>
+
+    <!-- DIALOGUE BOX (Unicorn — bottom center, different theme) -->
+    <div class="dialogue-box-unicorn" id="dialogue-box-unicorn">
+        <div class="speaker-name-unicorn">The Unicorn</div>
+        <div id="typewriter-text-unicorn"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🌀 MATRIX SPIRAL SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST THE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🦄</div>
+            <h1 id="success-title">UNICORN RESCUED!</h1>
+            <p id="success-subtitle">The Matrix Beam obliterated every demon! The unicorn is safe and joins your quest!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl22.js"></script>
+    <script>createHelpBox(22);</script>
+</body>
+</html>

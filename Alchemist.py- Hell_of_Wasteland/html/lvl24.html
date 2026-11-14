@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALCHEMIST.PY — Level 24: The Hellfire Shop</title>
+    <meta name="description" content="Level 24 of Alchemist.py - Shop for equipment at the Hellfire Shop using dictionary filtering!">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/lvl24.css">
+    <link rel="stylesheet" href="../css/helpbox.css">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+</head>
+<body>
+
+    <!-- PARTICLE EFFECT CANVAS -->
+    <canvas id="spell-particles"></canvas>
+
+    <!-- BACKGROUND -->
+    <div id="room-bg"></div>
+
+    <!-- SHOP HUD -->
+    <div id="shop-hud">
+        <div id="shop-label">🛒 HELLFIRE SHOP</div>
+        <div id="shop-info">ITEMS: 6 | AVG PRICE: ???</div>
+        <div id="shop-status">💰 FILTERING...</div>
+    </div>
+
+    <!-- THE CAT SPRITE (right side) -->
+    <div id="the-cat-lvl24"></div>
+
+    <!-- THE UNICORN SPRITE (left side) -->
+    <div id="the-unicorn-lvl24"></div>
+
+    <!-- DIALOGUE BOX (Cat — bottom center) -->
+    <div class="dialogue-box-cat" id="dialogue-box-cat">
+        <div class="speaker-name-cat">The Cat</div>
+        <div id="typewriter-text-cat"></div>
+    </div>
+
+    <!-- DIALOGUE BOX (Unicorn — bottom center, lavender theme) -->
+    <div class="dialogue-box-unicorn" id="dialogue-box-unicorn">
+        <div class="speaker-name-unicorn">Lumina</div>
+        <div id="typewriter-text-unicorn"></div>
+    </div>
+
+    <!-- NERD SPEECH BUBBLE -->
+    <div id="nerd-bubble" class="nerd-bubble">
+        <div id="nerd-bubble-text"></div>
+        <div class="nerd-bubble-tail"></div>
+    </div>
+
+    <!-- MAGUS SPEECH BUBBLE -->
+    <div id="magus-bubble" class="magus-bubble">
+        <div id="magus-bubble-text"></div>
+        <div class="magus-bubble-tail"></div>
+    </div>
+
+    <!-- GRIMOIRE OVERLAY (Code Editor) -->
+    <div id="grimoire-overlay">
+        <div id="grimoire-container">
+            <div id="grimoire-header">
+                <span id="grimoire-title">🛒 PRICE FILTER SPELL</span>
+                <button id="grimoire-close" title="Close">✕</button>
+            </div>
+            <div id="spell-task">
+                <span id="spell-task-label">TASK:</span>
+                <span id="spell-task-text">Loading...</span>
+            </div>
+            <div id="code-editor-area">
+                <div id="line-numbers"></div>
+                <textarea id="code-input" spellcheck="false" autocomplete="off"
+                    placeholder="# Write your Python code here..."></textarea>
+            </div>
+            <div id="output-console">
+                <div id="output-label">>>> OUTPUT</div>
+                <div id="output-text"></div>
+            </div>
+            <div id="grimoire-actions">
+                <button id="btn-cast-spell">⚡ CAST THE SPELL</button>
+                <button id="btn-clear">🗑 CLEAR</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="success-screen">
+        <div id="success-content">
+            <div id="success-icon">🛒</div>
+            <h1 id="success-title">ITEMS ACQUIRED!</h1>
+            <p id="success-subtitle">You found the affordable items! Time to gear up and prepare for the battle against Lucifer!</p>
+            <div id="success-stats"></div>
+            <button id="btn-continue">CONTINUE THE JOURNEY →</button>
+        </div>
+    </div>
+
+    <script src="../js/engine.js"></script>
+    <script src="../js/helpbox.js"></script>
+    <script src="../js/lvl24.js"></script>
+    <script>createHelpBox(24);</script>
+</body>
+</html>
